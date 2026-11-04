@@ -21,31 +21,42 @@ def save_history(history):
 def build_email(offers):
     lines = []
 
-    lines.append("✈️ LEVNÉ LETENKY")
-    lines.append("=" * 50)
+    lines.append("✈️ FLIGHT DEALS BOT")
+    lines.append("")
+    lines.append("🔥 NOVĚ NALEZENÉ LETENKY")
+    lines.append("")
+    lines.append("═" * 60)
     lines.append("")
 
     for offer in offers:
-        lines.append(f"ODLET: {offer.get('departure_airport', 'N/A')}")
-        lines.append(f"DESTINACE: {offer.get('destination', 'N/A')}")
-        lines.append(f"CENA: {offer.get('price', 'N/A')} Kč")
+
+        lines.append(f"🌍 Destinace: {offer.get('destination', 'N/A')}")
+        lines.append(f"🛫 Odlet: {offer.get('departure_airport', 'N/A')}")
+        lines.append(f"💰 Cena: {offer.get('price', 'N/A')} Kč")
 
         if offer.get("trip_days"):
-            lines.append(f"DÉLKA POBYTU: {offer['trip_days']} dní")
+            lines.append(f"🏖️ Pobyt: {offer['trip_days']} dní")
 
         if offer.get("outbound_date"):
             lines.append(
-                f"TERMÍN: {offer['outbound_date']} - {offer.get('return_date', '')}"
+                f"📅 Termín: {offer['outbound_date']} - {offer.get('return_date', '')}"
             )
 
-        lines.append(f"ZDROJ: {offer.get('source', 'N/A')}")
+        lines.append(f"🏷️ Zdroj: {offer.get('source', 'N/A')}")
 
         if offer.get("url"):
-            lines.append(f"ODKAZ: {offer['url']}")
+            lines.append("")
+            lines.append("🔗 Otevřít nabídku:")
+            lines.append(offer["url"])
 
         lines.append("")
-        lines.append("-" * 50)
+        lines.append("─" * 60)
         lines.append("")
+
+    lines.append("")
+    lines.append(f"📊 Celkem nalezeno nabídek: {len(offers)}")
+    lines.append("")
+    lines.append("Automaticky generováno Flight Deals Botem.")
 
     return "\n".join(lines)
 
