@@ -4,8 +4,10 @@ on:
   workflow_dispatch:
 
   schedule:
-    - cron: '0 * * * *'
-
+    - cron: '0 5 * * *'
+    - cron: '0 11 * * *'
+    - cron: '0 17 * * *'
+    
 jobs:
   scan:
     runs-on: ubuntu-latest
