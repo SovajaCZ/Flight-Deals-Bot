@@ -1,1 +1,57 @@
+{
+  "recipient": "jan.sabl@seznam.cz",
 
+  "departure_airports": [
+    "PRG",
+    "BRQ",
+    "OSR",
+    "PED",
+    "VIE",
+    "KTW"
+  ],
+
+  "destinations": [
+    "Rome",
+    "Milan",
+    "Venice",
+    "London",
+    "Barcelona",
+    "Madrid",
+    "Malaga",
+    "Palma de Mallorca",
+    "Tenerife",
+    "Madeira",
+    "Malta",
+    "Larnaca",
+    "Athens",
+    "Dubrovnik",
+    "Split",
+    "Dubai",
+    "Bangkok",
+    "Phuket",
+    "Bali",
+    "Maldives",
+    "New York",
+    "Miami",
+    "Toronto"
+  ],
+
+  "max_prices": {
+    "europe": 2500,
+    "middle_east": 5000,
+    "long_haul": 12000
+  },
+
+  "trip_length": {
+    "min_days": 3,
+    "max_days": 14
+  },
+
+  "search_options": {
+    "direct_flights_only": false,
+    "weekend_priority": true,
+    "flexible_dates": true
+  },
+
+  "results_limit": 20
+}
