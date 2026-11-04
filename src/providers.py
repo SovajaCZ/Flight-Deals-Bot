@@ -1,52 +1,129 @@
-from datetime import datetime
+import requests
+from bs4 import BeautifulSoup
+
+
+def get_cestujlevne():
+    offers = []
+
+    try:
+        url = "https://www.cestujlevne.com"
+        html = requests.get(url, timeout=20).text
+
+        soup = BeautifulSoup(html, "html.parser")
+
+        for link in soup.find_all("a", href=True)[:20]:
+
+            title = link.get_text(strip=True)
+
+            if len(title) < 20:
+                continue
+
+            href = link["href"]
+
+            if href.startswith("/"):
+                href = url + href
+
+            offers.append({
+                "id": href,
+                "departure_airport": "N/A",
+                "destination": title,
+                "price": 0,
+                "trip_days": 0,
+                "source": "Cestujlevne",
+                "destination_type": "europe",
+                "url": href
+            })
+
+    except Exception as e:
+        print(f"Cestujlevne chyba: {e}")
+
+    return offers
+
+
+def get_honzovy_letenky():
+    offers = []
+
+    try:
+        url = "https://honzovy-letenky.cz"
+        html = requests.get(url, timeout=20).text
+
+        soup = BeautifulSoup(html, "html.parser")
+
+        for link in soup.find_all("a", href=True)[:20]:
+
+            title = link.get_text(strip=True)
+
+            if len(title) < 20:
+                continue
+
+            href = link["href"]
+
+            offers.append({
+                "id": href,
+                "departure_airport": "N/A",
+                "destination": title,
+                "price": 0,
+                "trip_days": 0,
+                "source": "Honzovy letenky",
+                "destination_type": "europe",
+                "url": href
+            })
+
+    except Exception as e:
+        print(f"Honzovy letenky chyba: {e}")
+
+    return offers
+
+
+def get_zaletsi():
+    offers = []
+
+    try:
+        url = "https://zaletsi.cz"
+        html = requests.get(url, timeout=20).text
+
+        soup = BeautifulSoup(html, "html.parser")
+
+        for link in soup.find_all("a", href=True)[:20]:
+
+            title = link.get_text(strip=True)
+
+            if len(title) < 20:
+                continue
+
+            href = link["href"]
+
+            if href.startswith("/"):
+                href = url + href
+
+            offers.append({
+                "id": href,
+                "departure_airport": "N/A",
+                "destination": title,
+                "price": 0,
+                "trip_days": 0,
+                "source": "Zaletsi",
+                "destination_type": "europe",
+                "url": href
+            })
+
+    except Exception as e:
+        print(f"Zaletsi chyba: {e}")
+
+    return offers
 
 
 def get_flight_offers(settings):
-    """
-    Testovací data.
-    Později nahradíme skutečným načítáním z Azairu.
-    """
 
-    return [
-        {
-            "id": "PRG_Rome_1290_2027-04-12",
+    offers = []
 
-            "departure_airport": "PRG",
+    offers.extend(get_cestujlevne())
+    offers.extend(get_honzovy_letenky())
+    offers.extend(get_zaletsi())
 
-            "destination": "Rome",
+    unique = {}
 
-            "price": 1290,
+    for offer in offers:
+        unique[offer["id"]] = offer
 
-            "trip_days": 4,
-
-            "outbound_date": "2027-04-12",
-            "return_date": "2027-04-16",
-
-            "source": "Azair",
-
-            "destination_type": "europe",
-
-            "url": "https://www.azair.com/"
-        },
-
-        {
-            "id": "VIE_Bangkok_8990_2027-05-03",
-
-            "departure_airport": "VIE",
-
-            "destination": "Bangkok",
-
-            "price": 8990,
-
-            "trip_days": 14,
-
-            "outbound_date": "2027-05-03",
-            "return_date": "2027-05-17",
-
-            "source": "Azair",
-
-            "destination_type": "long_haul",
-
-            "url": "https://www.azair.com/"
-        }
-    ]
+    return list(unique.values())
